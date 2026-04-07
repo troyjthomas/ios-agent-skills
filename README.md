@@ -21,14 +21,21 @@ AI coding agents default to the shortest path: custom implementations over nativ
 
 ## Quick Start
 
-```bash
-git clone https://github.com/troyjthomas/ios-agent-skills.git
+**One-line install:**
 
-# Copy relevant skills into your project, or reference directly
-# in your CLAUDE.md
+```bash
+curl -fsSL https://raw.githubusercontent.com/troyjthomas/ios-agent-skills/main/install.sh | bash
 ```
 
-See [docs/getting-started.md](docs/getting-started.md) for the full setup walkthrough.
+**Set up your MCP stack:**
+
+```bash
+claude mcp add sosumi -- npx -y mcp-remote https://sosumi.ai/mcp
+claude mcp add XcodeBuildMCP -s user -- npx -y xcodebuildmcp@latest mcp
+claude mcp add --transport stdio xcode -- xcrun mcpbridge
+```
+
+See [QUICKSTART.md](QUICKSTART.md) for the full 5-minute walkthrough, or [docs/getting-started.md](docs/getting-started.md) for detailed documentation.
 
 ## Skill Map
 
