@@ -93,23 +93,78 @@ printf "  ${GREEN}%s${RESET} references   (Liquid Glass, community repos)\n" "$R
 printf "\n"
 printf "  ${DIM}Installed to: %s${RESET}\n" "$INSTALL_DIR"
 
-# ── Next steps ──────────────────────────────────────────────
-header "Next steps"
+# ── MCP Setup ──────────────────────────────────────────────
+YELLOW='\033[0;33m'
+
+if command -v claude &>/dev/null; then
+    printf "\n"
+    printf "Would you like to set up the MCP servers now? (y/n) "
+    read -r MCP_REPLY
+
+    if [[ "$MCP_REPLY" =~ ^[Yy]$ ]]; then
+        header "Setting up MCP servers..."
+
+        # Sosumi (Apple documentation)
+        if claude mcp add sosumi -s user -- npx -y mcp-remote https://sosumi.ai/mcp &>/dev/null; then
+            check "Sosumi (Apple documentation)"
+        else
+            printf "  ${YELLOW}⚠${RESET} Sosumi — setup failed, you can add it manually later\n"
+        fi
+
+        # XcodeBuildMCP (build, run, test)
+        if claude mcp add XcodeBuildMCP -s user -e XCODEBUILDMCP_SENTRY_DISABLED=true -- npx -y xcodebuildmcp@latest mcp &>/dev/null; then
+            check "XcodeBuildMCP (build, run, test)"
+        else
+            printf "  ${YELLOW}⚠${RESET} XcodeBuildMCP — setup failed, you can add it manually later\n"
+        fi
+
+        # Xcode Bridge (requires Xcode to be open)
+        if claude mcp add --transport stdio -s user xcode -- xcrun mcpbridge &>/dev/null; then
+            check "Xcode Bridge (live editing)"
+        else
+            printf "  ${YELLOW}⚠${RESET} Xcode Bridge — requires Xcode to be open, you can add it later\n"
+        fi
+
+        header "Setup complete!"
+        printf "\n"
+        printf "  Two things left to do manually:\n"
+        printf "\n"
+        printf "  ${BOLD}1.${RESET} Run ${CYAN}/config${RESET} in Claude Code and enable ${BOLD}Remote Control${RESET} for all sessions\n"
+        printf "  ${BOLD}2.${RESET} ${DIM}(Optional)${RESET} Add Figma MCP:\n"
+        printf "     ${CYAN}claude mcp add figma -- npx -y figma-developer-mcp --figma-api-key YOUR_KEY${RESET}\n"
+    else
+        header "Next steps"
+        printf "\n"
+        printf "  ${BOLD}1. Set up your MCP stack${RESET} ${DIM}(copy-paste these into your terminal)${RESET}\n"
+        printf "\n"
+        printf "  ${CYAN}claude mcp add sosumi -s user -- npx -y mcp-remote https://sosumi.ai/mcp${RESET}\n"
+        printf "  ${CYAN}claude mcp add XcodeBuildMCP -s user -e XCODEBUILDMCP_SENTRY_DISABLED=true -- npx -y xcodebuildmcp@latest mcp${RESET}\n"
+        printf "  ${CYAN}claude mcp add --transport stdio -s user xcode -- xcrun mcpbridge${RESET}\n"
+        printf "\n"
+        printf "  ${DIM}Figma MCP (if you use Figma):${RESET}\n"
+        printf "  ${CYAN}claude mcp add figma -- npx -y figma-developer-mcp --figma-api-key YOUR_KEY${RESET}\n"
+        printf "\n"
+        printf "  ${BOLD}2. Enable Remote Control${RESET}\n"
+        printf "  Run ${CYAN}claude${RESET}, type ${CYAN}/config${RESET}, and set Remote Control to ${BOLD}enabled${RESET}\n"
+    fi
+else
+    header "Next steps"
+    printf "\n"
+    printf "  ${BOLD}1. Install Claude Code${RESET}, then set up MCP servers:\n"
+    printf "\n"
+    printf "  ${CYAN}claude mcp add sosumi -s user -- npx -y mcp-remote https://sosumi.ai/mcp${RESET}\n"
+    printf "  ${CYAN}claude mcp add XcodeBuildMCP -s user -e XCODEBUILDMCP_SENTRY_DISABLED=true -- npx -y xcodebuildmcp@latest mcp${RESET}\n"
+    printf "  ${CYAN}claude mcp add --transport stdio -s user xcode -- xcrun mcpbridge${RESET}\n"
+    printf "\n"
+    printf "  ${DIM}Figma MCP (if you use Figma):${RESET}\n"
+    printf "  ${CYAN}claude mcp add figma -- npx -y figma-developer-mcp --figma-api-key YOUR_KEY${RESET}\n"
+    printf "\n"
+    printf "  ${BOLD}2. Enable Remote Control${RESET}\n"
+    printf "  Run ${CYAN}claude${RESET}, type ${CYAN}/config${RESET}, and set Remote Control to ${BOLD}enabled${RESET}\n"
+fi
 
 printf "\n"
-printf "  ${BOLD}1. Set up your MCP stack${RESET} ${DIM}(copy-paste these into your terminal)${RESET}\n"
-printf "\n"
-printf "  ${CYAN}claude mcp add sosumi -- npx -y mcp-remote https://sosumi.ai/mcp${RESET}\n"
-printf "  ${CYAN}claude mcp add XcodeBuildMCP -s user -- npx -y xcodebuildmcp@latest mcp${RESET}\n"
-printf "  ${CYAN}claude mcp add --transport stdio xcode -- xcrun mcpbridge${RESET}\n"
-printf "\n"
-printf "  ${DIM}Figma MCP (if you use Figma):${RESET}\n"
-printf "  ${CYAN}claude mcp add figma${RESET}\n"
-printf "\n"
-printf "  ${BOLD}2. Enable Remote Control${RESET}\n"
-printf "  Run ${CYAN}claude${RESET}, type ${CYAN}/config${RESET}, and set Remote Control to ${BOLD}enabled${RESET}\n"
-printf "\n"
-printf "  ${BOLD}3. Start building!${RESET}\n"
+printf "  ${BOLD}Start building!${RESET}\n"
 printf "  Open Claude Code and say: ${CYAN}\"Build me a [your idea] app for iOS\"${RESET}\n"
 printf "\n"
 printf "  ${DIM}Full guide: https://github.com/troyjthomas/ios-agent-skills/blob/main/QUICKSTART.md${RESET}\n"
