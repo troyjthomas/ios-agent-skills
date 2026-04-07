@@ -22,7 +22,7 @@ AI coding agents default to the shortest path: custom implementations over nativ
 ## Quick Start
 
 ```bash
-git clone https://github.com/troythomas/ios-agent-skills.git
+git clone https://github.com/troyjthomas/ios-agent-skills.git
 
 # Copy relevant skills into your project, or reference directly
 # in your CLAUDE.md
@@ -35,40 +35,40 @@ See [docs/getting-started.md](docs/getting-started.md) for the full setup walkth
 ### Setup
 | Skill | Purpose |
 |---|---|
-| [mcp-setup](skills/mcp-setup/mcp-setup.md) | Figma + Apple Docs + Xcode Build + Preview MCPs |
+| [mcp-setup](skills/mcp-setup/SKILL.md) | Figma + Apple Docs + Xcode Build + Preview MCPs |
 
 ### Define
 | Skill | Purpose |
 |---|---|
-| [app-vision](skills/app-vision/app-vision.md) | Refine a rough idea into a scoped app concept |
-| [app-spec](skills/app-spec/app-spec.md) | CLAUDE.md rules + screen-by-screen spec |
+| [app-vision](skills/app-vision/SKILL.md) | Refine a rough idea into a scoped app concept |
+| [app-spec](skills/app-spec/SKILL.md) | CLAUDE.md rules + screen-by-screen spec |
 
 ### Design
 | Skill | Purpose |
 |---|---|
-| [design-system](skills/design-system/design-system.md) | Colors, typography, assets, brand rules |
-| [figma-to-code](skills/figma-to-code/figma-to-code.md) | Figma frames to SwiftUI via MCP |
+| [design-system](skills/design-system/SKILL.md) | Colors, typography, assets, brand rules |
+| [figma-to-code](skills/figma-to-code/SKILL.md) | Figma frames to SwiftUI via MCP |
 
 ### Build
 | Skill | Purpose |
 |---|---|
-| [scaffolding](skills/scaffolding/scaffolding.md) | Full app skeleton in one session |
-| [screen-by-screen](skills/screen-by-screen/screen-by-screen.md) | Incremental build with preview verification |
-| [swiftui-native-first](skills/swiftui-native-first/swiftui-native-first.md) | Native component enforcement (the most important skill) |
-| [xcode-integration](skills/xcode-integration/xcode-integration.md) | .pbxproj safety, build/test/preview via MCP |
-| [platform-gotchas](skills/platform-gotchas/platform-gotchas.md) | Living document of iOS-specific quirks |
-| [git-workflow](skills/git-workflow/git-workflow.md) | Parallel workspace merge strategy |
-| [session-management](skills/session-management/session-management.md) | Context windows, continuity, resuming work |
+| [scaffolding](skills/scaffolding/SKILL.md) | Full app skeleton in one session |
+| [screen-by-screen](skills/screen-by-screen/SKILL.md) | Incremental build with preview verification |
+| [swiftui-native-first](skills/swiftui-native-first/SKILL.md) | Native component enforcement (the most important skill) |
+| [xcode-integration](skills/xcode-integration/SKILL.md) | .pbxproj safety, build/test/preview via MCP |
+| [platform-gotchas](skills/platform-gotchas/SKILL.md) | Living document of iOS-specific quirks |
+| [git-workflow](skills/git-workflow/SKILL.md) | Parallel workspace merge strategy |
+| [session-management](skills/session-management/SKILL.md) | Context windows, continuity, resuming work |
 
 ### Persist, Test, Polish, Ship, Maintain
 | Skill | Purpose |
 |---|---|
-| [data-persistence](skills/data-persistence/data-persistence.md) | SwiftData models, queries, state propagation |
-| [testing-strategy](skills/testing-strategy/testing-strategy.md) | Automated + manual testing, CI/CD |
-| [polish-and-refinement](skills/polish-and-refinement/polish-and-refinement.md) | Liquid Glass, haptics, dark mode, accessibility |
-| [device-testing](skills/device-testing/device-testing.md) | Real device testing checklist |
-| [app-store-prep](skills/app-store-prep/app-store-prep.md) | TestFlight, metadata, App Store submission |
-| [post-launch](skills/post-launch/post-launch.md) | Crash reporting, feedback loops, versioning |
+| [data-persistence](skills/data-persistence/SKILL.md) | SwiftData models, queries, state propagation |
+| [testing-strategy](skills/testing-strategy/SKILL.md) | Automated + manual testing, CI/CD |
+| [polish-and-refinement](skills/polish-and-refinement/SKILL.md) | Liquid Glass, haptics, dark mode, accessibility |
+| [device-testing](skills/device-testing/SKILL.md) | Real device testing checklist |
+| [app-store-prep](skills/app-store-prep/SKILL.md) | TestFlight, metadata, App Store submission |
+| [post-launch](skills/post-launch/SKILL.md) | Crash reporting, feedback loops, versioning |
 
 ## MCP Stack
 
