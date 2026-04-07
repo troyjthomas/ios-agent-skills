@@ -125,6 +125,8 @@ Continue from your phone via Remote Control (active sessions) and Dispatch (asyn
 - [twostraws/SwiftUI-Agent-Skill](https://github.com/twostraws/swiftui-agent-skill) (SwiftUI Pro) — Catches subtle SwiftUI API mistakes LLMs make. Complements swiftui-native-first.
 - [harryworld/Xcode26-Agent-Skills](https://github.com/harryworld/Xcode26-Agent-Skills) — iOS 26 / Xcode 26 reference with authoritative Liquid Glass and Foundation Models guidance.
 - [truongduy2611/app-store-preflight-skills](https://github.com/truongduy2611/app-store-preflight-skills) — Scans for App Store rejection patterns before submission.
+- [callstackincubator/agent-device](https://github.com/callstackincubator/agent-device) — CLI for AI agents to control iOS simulators and real devices. Interactive testing from Claude Code.
+- [dadederk/iOS-Accessibility-Agent-Skill](https://github.com/dadederk/iOS-Accessibility-Agent-Skill) — Deep accessibility guidance for VoiceOver, Dynamic Type, and assistive technologies.
 
 For specialized needs beyond the core skills:
 - [AvdLee/SwiftUI-Agent-Skill](https://github.com/AvdLee/SwiftUI-Agent-Skill) — Deep SwiftUI references

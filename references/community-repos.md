@@ -4,7 +4,7 @@ Curated list of repos with skills, reference files, and generators relevant to i
 
 ## Recommended Companion Skills
 
-These three skills are designed to work alongside this repo. Install them for stronger coverage of SwiftUI correctness, iOS 26 APIs, and App Store compliance.
+These skills are designed to work alongside this repo. Install them for stronger coverage of SwiftUI correctness, iOS 26 APIs, App Store compliance, device testing, and accessibility.
 
 ### SwiftUI Pro — twostraws
 
@@ -32,6 +32,28 @@ iOS 26 and Xcode 26 reference validated against Apple's hidden Xcode AI document
 **Author:** truongduy2611
 
 Scans projects for App Store rejection patterns before submission.
+
+---
+
+### Agent Device — callstackincubator
+
+**Repo:** github.com/callstackincubator/agent-device
+**Author:** Callstack
+
+CLI for AI agents to control iOS simulators and real devices. Tap, scroll, inspect UI, take snapshots. Enables interactive testing from Claude Code.
+
+**Install:** `npm install -g agent-device`
+
+---
+
+### iOS Accessibility Agent Skill — dadederk
+
+**Repo:** github.com/dadederk/iOS-Accessibility-Agent-Skill
+**Author:** dadederk
+
+Deep accessibility guidance for VoiceOver, Dynamic Type, and Apple assistive technologies. Implementation and testing patterns for UIKit and SwiftUI.
+
+**Install:** `npx skills add https://github.com/dadederk/iOS-Accessibility-Agent-Skill --skill ios-accessibility`
 
 ---
 
