@@ -2,6 +2,39 @@
 
 Curated list of repos with skills, reference files, and generators relevant to iOS development with Claude Code. Pull from these when you need specific capabilities beyond the core skills in this pack.
 
+## Recommended Companion Skills
+
+These three skills are designed to work alongside this repo. Install them for stronger coverage of SwiftUI correctness, iOS 26 APIs, and App Store compliance.
+
+### SwiftUI Pro — twostraws
+
+**Repo:** github.com/twostraws/swiftui-agent-skill
+**Author:** Paul Hudson (Hacking with Swift)
+
+Catches subtle SwiftUI API mistakes LLMs make. Complements our swiftui-native-first skill.
+
+**Install:** `npx skills add https://github.com/twostraws/swiftui-agent-skill --skill swiftui-pro`
+
+---
+
+### Xcode 26 Agent Skills — harryworld
+
+**Repo:** github.com/harryworld/Xcode26-Agent-Skills
+**Author:** harryworld
+
+iOS 26 and Xcode 26 reference validated against Apple's hidden Xcode AI documentation. Authoritative Liquid Glass and Foundation Models guidance.
+
+---
+
+### App Store Preflight Skills — truongduy2611
+
+**Repo:** github.com/truongduy2611/app-store-preflight-skills
+**Author:** truongduy2611
+
+Scans projects for App Store rejection patterns before submission.
+
+---
+
 ## SwiftUI Expert Skill — AvdLee
 
 **Repo:** github.com/AvdLee/SwiftUI-Agent-Skill

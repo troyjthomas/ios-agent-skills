@@ -121,6 +121,11 @@ Continue from your phone via Remote Control (active sessions) and Dispatch (asyn
 
 ## Community Resources
 
+**Recommended companion skills** — install alongside this repo:
+- [twostraws/SwiftUI-Agent-Skill](https://github.com/twostraws/swiftui-agent-skill) (SwiftUI Pro) — Catches subtle SwiftUI API mistakes LLMs make. Complements swiftui-native-first.
+- [harryworld/Xcode26-Agent-Skills](https://github.com/harryworld/Xcode26-Agent-Skills) — iOS 26 / Xcode 26 reference with authoritative Liquid Glass and Foundation Models guidance.
+- [truongduy2611/app-store-preflight-skills](https://github.com/truongduy2611/app-store-preflight-skills) — Scans for App Store rejection patterns before submission.
+
 For specialized needs beyond the core skills:
 - [AvdLee/SwiftUI-Agent-Skill](https://github.com/AvdLee/SwiftUI-Agent-Skill) — Deep SwiftUI references
 - [rshankras/claude-code-apple-skills](https://github.com/rshankras/claude-code-apple-skills) — 100+ skills, 52 generators
