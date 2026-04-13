@@ -22,11 +22,11 @@ claude mcp add --transport stdio xcode -- xcrun mcpbridge
 
 See `skills/mcp-setup/SKILL.md` for detailed instructions.
 
-## Step 1: Vision (1 hour, Claude Chat)
+## Step 1: Vision (Claude Chat)
 
 Open the Claude app. Describe your app idea. Use the `skills/app-vision/SKILL.md` framework. Output: one-sentence pitch, target user, screen list, not-doing list.
 
-## Step 2: Spec (30 min, Claude Chat)
+## Step 2: Spec (Claude Chat)
 
 Turn the vision into two documents using `skills/app-spec/SKILL.md`:
 - `CLAUDE.md` — rules for Claude Code (under 500 lines)
@@ -34,31 +34,31 @@ Turn the vision into two documents using `skills/app-spec/SKILL.md`:
 
 Include the `.pbxproj` safety rule and known gotchas from `skills/platform-gotchas/SKILL.md`.
 
-## Step 3: Repo Setup (10 min, Terminal + Xcode)
+## Step 3: Repo Setup (Terminal + Xcode)
 
 1. Create Xcode project (SwiftUI + SwiftData)
 2. Drop CLAUDE.md and APP_SPEC.md in project root
 3. `git init && git add . && git commit -m "Initial project with spec"`
 
-## Step 4: Scaffolding (30-45 min, Claude Code)
+## Step 4: Scaffolding (Claude Code)
 
 One session. One prompt. Build the full skeleton. See `skills/scaffolding/SKILL.md`.
 
-## Step 5: Screen by Screen (8-12 hours, Conductor)
+## Step 5: Screen by Screen (Conductor)
 
 Pick a screen. Open a Conductor workspace. Describe it in 2-5 sentences. Build. Review. Merge. Repeat. See `skills/screen-by-screen/SKILL.md`.
 
 **Continue from your phone:** Open Remote Control to monitor progress, give feedback, and approve merges while away from your desk.
 
-## Step 6: Persistence (2-3 hours, Claude Code)
+## Step 6: Persistence (Claude Code)
 
 Wire up SwiftData models. See `skills/data-persistence/SKILL.md`.
 
-## Step 7: Polish (4-6 hours, Claude Code + Xcode)
+## Step 7: Polish (Claude Code + Xcode)
 
 Liquid Glass, haptics, dark mode, Figma matching. See `skills/polish-and-refinement/SKILL.md`.
 
-## Step 8: Test and Ship (4-6 hours)
+## Step 8: Test and Ship
 
 Automated tests via XcodeBuildMCP, manual testing on device, TestFlight, App Store. See `skills/device-testing/SKILL.md` and `skills/app-store-prep/SKILL.md`.
 
