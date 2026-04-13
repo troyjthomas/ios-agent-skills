@@ -1,6 +1,6 @@
 # Getting Started
 
-## Step 0: MCP Setup (One-Time, 10 Minutes)
+## Step 0: MCP Setup (One-Time)
 
 Before your first project, set up the four MCPs. This makes every project better.
 
