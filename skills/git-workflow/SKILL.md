@@ -17,6 +17,54 @@ workspace: build-settings-flow     → branch: build-settings-flow
 workspace: build-explore-tab       → branch: build-explore-tab
 ```
 
+## Branch-per-Iteration Rhythm
+
+Whether you're in Conductor or running a single Claude Code session, the rhythm that works on production builds:
+
+1. **Always branch from a freshly-pulled `main`.** Never reuse old branches across iterations:
+   ```bash
+   git checkout main && git pull origin main && git checkout -b feat/<topic>
+   ```
+   Reusing branches accumulates stale state, makes diffs unreviewable, and re-introduces fixes you already merged.
+
+2. **Open a PR on the FIRST commit, not at the end.** A PR is a conversation, not a deliverable. Pushing the first commit and opening a PR immediately:
+   - Surfaces the change to anyone watching the repo
+   - Lets CI run early (catches build / lint failures before you've layered more on top)
+   - Gives reviewers a stake in the iteration before it's locked in
+
+3. **Push eagerly.** After every meaningful commit, `git push`. The branch is more valuable on the remote than on your machine. If your laptop dies mid-iteration, the work isn't lost.
+
+4. **One topic per branch.** If you find yourself fixing two unrelated things, stop and split into two branches. Reviews stay tight; reverts stay surgical.
+
+5. **After every merge, the re-sync ritual.** Local `main` needs to be in sync with remote `main` before you start the next branch — otherwise tools like Xcode that read from your working directory keep showing the old code:
+   ```bash
+   git fetch origin && git checkout main && git pull origin main
+   ```
+   Make this a reflex. It prevents an entire class of "I fixed it but it's still broken on simulator" confusion.
+
+This rhythm pairs with Conductor's parallel workspaces below. Conductor automates step 1 per workspace, and the rhythm above describes how to operate WITHIN each workspace.
+
+### Recovery: Commit Landed on `main` Locally
+
+This happens occasionally — `git checkout -b` immediately followed by edits and a commit can land the commit on `main` instead of the new branch if some system event interrupts the checkout (mid-MCP-call, mid-file-system-event, etc.). Symptom: `git log` on your "new branch" shows the upstream commit, while `git log` on `main` shows your fix.
+
+Recovery:
+```bash
+# 1. Checkout the branch that should have the fix
+git checkout <branch-with-the-fix>
+
+# 2. Reset it to the commit that's currently on local main
+git reset --hard <fix-commit-sha>
+
+# 3. Force-push (with-lease, never plain --force)
+git push origin <branch-name> --force-with-lease
+
+# 4. Reset local main back to the upstream tip
+git checkout main && git reset --hard origin/main
+```
+
+`--force-with-lease` is the safety belt: it refuses to overwrite remote commits you haven't seen. Plain `--force` will silently destroy work; never use it.
+
 ## The Merge Order Rule
 
 **Structural changes go first. Screen-specific changes go second.**
