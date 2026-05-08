@@ -35,6 +35,13 @@ Start every new project CLAUDE.md with these. Sourced from community experience:
 - GeometryReader is rarely needed — use layout priorities and flexible frames first
 - .task modifier cancels automatically on view disappear (preferred over .onAppear)
 - List selection requires NavigationSplitView on iPad, NavigationStack on iPhone
+- Text(AttributedString) silently drops paragraphStyle — even with the \.uiKit AttributedScopes requested, SwiftUI's Text doesn't honor NSParagraphStyle.minimumLineHeight / maximumLineHeight on multi-line strings; bridge to UILabel via UIViewRepresentable when you need an absolute line-height lock
+- .lineSpacing(N) is additive, not absolute — it adds to the font's natural line height; there is no SwiftUI-native way to lock multi-line text to an exact line height
+- UIFont.systemFont(...) ignores scene-level .fontDesign(.rounded) — when bridging to UIKit, resolve fontDescriptor.withDesign(.rounded) explicitly or your bridged label renders in default SF Pro while the rest of the app stays Rounded
+- Canvas without an explicit .frame() grows to fill its GeometryReader and can intercept hit-tests via its backing layer — add .allowsHitTesting(false) to render-only Canvas surfaces or taps meant for views below it get eaten
+- @FocusState on a vertical-axis TextField (axis: .vertical) is unreliable for keyboard dismissal — setting it to false doesn't always lower the keyboard; pair with window.endEditing(true) via the UIKit responder chain as a fallback
+- .frame(maxWidth: .infinity) on a frosted-glass capsule with leading-aligned inner content leaves visible empty trailing space — for snug-fit bars, omit maxWidth so the capsule shrinks to its content
+- SwiftUI's Text body type-checker can stack-overflow on monolithic bodies — extract nested view chunks into @ViewBuilder properties or wrap conditional sub-trees in AnyView when the compiler complains
 ```
 
 ### Liquid Glass (iOS 26)
@@ -75,6 +82,13 @@ Start every new project CLAUDE.md with these. Sourced from community experience:
 - @MainActor for all UI-related code and ViewModels
 - Swift 6 strict concurrency checking may flag warnings — address them, don't suppress
 - Task cancellation should be handled explicitly in long-running operations
+```
+
+### Drawing / Canvas
+
+```
+- Rectangle().path(in: rect).stroke(lineWidth: N) paints CENTERED on the path — a 2pt stroke covers 1pt INSIDE and 1pt OUTSIDE the rect; for selection borders or any stroke that should sit entirely outside a region, rect.insetBy(dx: -N/2, dy: -N/2) before stroking
+- An overlapping stroke combined with anti-aliasing on an animating dashPhase produces sub-pixel flicker that emanates from the region's corners — usually mistaken for a Core Animation bug; it's stroke-on-cell-boundary
 ```
 
 ## How to Capture New Gotchas
