@@ -57,6 +57,40 @@ See `references/liquid-glass.md` for known patterns and the AvdLee SwiftUI Agent
 - Do NOT manually apply `.glassEffect` to system chrome (doubles the effect)
 - Leave intensity and tinting at system defaults for v1
 
+**Glass-button label rules — read carefully before building any custom glass button:**
+
+- **NEVER apply `.foregroundColor(.white)` or `.foregroundStyle(.white)` to labels inside `.glassProminent` buttons.** The system applies a vibrancy treatment that produces the *correct* tinted-white automatically; forcing `.white` overrides vibrancy and gives flat pure-white glyphs that look painted-on. The rule is specifically about WHITE — explicit `Color.black` for dark-mode legibility against pale-tint pills (see below) is a different and acceptable concern.
+
+- **Tinted glass that's NOT a Button uses `.glassEffect(.regular.tint(...).interactive(), in: Capsule())`.** The `.interactive()` modifier is what gives you the press-scale + bounce + shimmer that `.glassProminent` includes for free on Buttons. Without it the surface looks like flat tinted glass and feels dead.
+
+- **For a glass button that needs a specific visible height (e.g. 44pt to match a sibling `.glassProminent` "Done" button), build the label manually instead of relying on `SecondaryGlassButtonStyle`-style wrappers.** Style wrappers with internal `minHeight: 32` + 8pt vertical padding compute their capsule around `(label + padding) ≈ 33pt visible`, which an outer `.frame(height: 44)` does NOT override — the outer frame just reserves space, the visible pill stays 33pt. Manual recipe:
+  ```swift
+  Button { … } label: {
+      Text("Cancel")
+          .font(.subheadline.weight(.semibold))
+          .foregroundStyle(.primary)
+          .padding(.horizontal, 16)
+          .frame(height: 44)
+          .contentShape(Capsule())
+          .frostedGlass(in: Capsule())
+  }
+  .buttonStyle(.plain)
+  ```
+
+- **Dark mode + light pastel tints: the system's vibrancy can pick a tinted-white that is illegible on cream / pale-yellow / pale-orange pills.** Override the label color in dark mode only; let light mode keep system vibrancy. Idiomatic SwiftUI:
+  ```swift
+  Group {
+      if systemColorScheme == .dark {
+          Text("Continue").foregroundStyle(Color.black)
+      } else {
+          Text("Continue")
+      }
+  }
+  ```
+  The `Group { if/else }` wrapper lets `@ViewBuilder` type-erase the two branches so you can attach `.font()` and `.frame()` once outside.
+
+- **Even-distribution layout: `Spacer(minLength: 0)` between fixed-width slots beats `HStack(spacing: …)` for "icons spread across the bar's full width" patterns.** Spacers absorb whatever residual width the bar has, so the first and last slots anchor to the bar's leading and trailing edges and the gaps between them stay equal regardless of bar width or device size.
+
 ### 3. Typography Hierarchy
 
 ```
