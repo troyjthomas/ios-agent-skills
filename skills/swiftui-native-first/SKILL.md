@@ -169,3 +169,22 @@ Examples of things that are NOT custom components:
 - A "custom" settings row (use LabeledContent in a List)
 - A "custom" pull-to-refresh (use .refreshable)
 - A "custom" bottom sheet (use .sheet with detents)
+
+## When to Bridge to UIKit
+
+Native-first does NOT mean SwiftUI-only. There are a small number of places where SwiftUI's API is genuinely insufficient as of iOS 26 and bridging to UIKit (`UIViewRepresentable` / `UIViewControllerRepresentable`) is the correct path. These are escape hatches, not preferences — the rule is "use SwiftUI unless you can name the specific API gap that forces a bridge."
+
+The escape hatches discovered in production builds, with their narrow scope:
+
+1. **Absolute line-height locks.** SwiftUI's `.lineSpacing(N)` only adds to the font's natural line height — there's no API to pin multi-line text to an exact value (e.g. "56pt type, 54pt line height" for a dense headline). `Text(AttributedString)` with `NSParagraphStyle.minimumLineHeight` / `maximumLineHeight` looks like it should work but SwiftUI silently drops the paragraph style. Bridge a `UILabel` via `UIViewRepresentable` and set `attributedText` with the paragraph style — UILabel honors it correctly.
+
+2. **`UIColorPickerViewController` with the eyedropper feature.** Wrapping it in a SwiftUI `.sheet` breaks the eyedropper round-trip (`_pickerDidDismissEyedropper` → `presentViewController:` throws `NSInternalInconsistencyException` and crashes the app). Present it via UIKit's `topViewController.present(_:animated:)` directly and own the lifecycle from a coordinator class.
+
+3. **Reliable keyboard dismissal of vertical-axis `TextField`s.** SwiftUI's `@FocusState` on `TextField(axis: .vertical)` is unreliable for dismissing the keyboard — setting it to `false` doesn't always lower the keyboard. Pair the `@FocusState` mutation with `window.endEditing(true)` via UIKit's responder chain as a fallback.
+
+When you bridge:
+- See the **uikit-bridging** skill for `UIViewRepresentable` lifecycle, `sizeThatFits`, animation suppression, and font-design inheritance
+- Inherit scene-level `.fontDesign(.rounded)` explicitly — UIKit doesn't pick it up automatically (`fontDescriptor.withDesign(.rounded)`)
+- Document the bridge in CLAUDE.md with the API gap that forced it, so future agents don't try to "simplify" it back to SwiftUI
+
+Frame UIKit bridges as "documented exceptions," not "give up on SwiftUI." The above three are the only ones I've ever needed; if your build hits a fourth, document it before reaching for a bridge.
