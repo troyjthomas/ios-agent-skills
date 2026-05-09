@@ -585,6 +585,36 @@ Four MCPs give Claude Code full access to your design files, Apple documentation
 
 Continue from your phone via Remote Control (active sessions) and Dispatch (async tasks). See [docs/mobile-workflow.md](docs/mobile-workflow.md).
 
+## What This Covers (And What It Doesn't)
+
+This kit covers **building** an iOS app — the SwiftUI app itself, the design-to-code workflow, the engineering practices that produce a quality build, and the technical mechanics of getting that build into TestFlight and the App Store.
+
+It does **not** cover **shipping the app as a product**:
+
+- Marketing, App Store Optimization (ASO), or screenshot design
+- User acquisition, growth strategy, ads, or paid promotion
+- Brand strategy, naming, or positioning
+- Pricing, monetization strategy, or business model design
+- Customer support, community building, or feedback operations
+
+The `app-store-prep` and `post-launch` skills do cover the **technical** submission process — icons, metadata, signing certificates, bundle ID setup, crash reporting, and version updates — because those are engineering concerns that block a build from reaching users. The marketing / growth / business side are real disciplines with their own communities and tools; conflating them with engineering practice would dilute both.
+
+## Out of Scope (Not Yet Covered)
+
+The skills here come from real production builds. Topics that haven't yet been hit by a build using this kit aren't included — adding them speculatively would dilute the "battle-tested" feel of the kit. These topics are on the radar but not yet covered:
+
+- **Networking** — REST, GraphQL, WebSocket, `URLSession` + async/await + `Codable` patterns
+- **Authentication** — Sign in with Apple, OAuth / OIDC, biometric auth (Face ID, Touch ID)
+- **Push notifications** — APNS setup, notification handling, background modes
+- **In-app purchases & subscriptions** — StoreKit 2, paywalls, receipt validation
+- **System frameworks** — HealthKit, CloudKit, PassKit, Maps, ARKit, Vision, SiriKit, WidgetKit
+- **Localization & internationalization** — `.xcstrings`, RTL layouts, plurals, locale-aware formatting
+- **Performance profiling** — Instruments, hangs, frame drops, memory pressure
+- **Custom media pipelines** — audio capture / playback, video editing, image processing
+- **Analytics & telemetry** — event logging, user tracking, dashboards
+
+These will land as specific builds hit them and yield concrete, transferable patterns. If you build something with this kit that hits one of these areas and produces a transferable pattern worth sharing, contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Design Principles
 
 1. **Native by default, custom by exception.** SwiftUI components always.
