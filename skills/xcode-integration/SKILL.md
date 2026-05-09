@@ -69,6 +69,29 @@ before telling me the screen is ready for review.
 
 This catches compile errors before you ever open Xcode.
 
+### SourceKit Lag — Distinguishing Real Errors from Phantom Diagnostics
+
+SourceKit (the indexing service that powers Xcode's in-editor diagnostics) sometimes lags behind a successful build. After your code is actually compiling cleanly, SourceKit may still report stale diagnostics like:
+
+```
+✘ No such module 'UIKit'
+✘ Cannot find type 'PatternModel' in scope
+✘ Type 'X' does not conform to protocol 'Equatable'
+```
+
+These look terrifying but are not real. **Build success from XcodeBuildMCP is ground truth, not SourceKit's in-editor diagnostics.** If `build_sim` returns `status: SUCCEEDED` with `errors: []`, the code compiles. The SourceKit diagnostics are cache lag — they'll catch up on the next index pass (saving the file, switching focus to a different file and back, or `Product > Clean Build Folder`).
+
+**The rule:** when SourceKit and the build log disagree, trust the build log. Don't chase ghost diagnostics — you'll waste time "fixing" code that's already correct.
+
+**How to tell:** the diagnostic appears in Xcode's editor or via your IDE's SourceKit integration, but searching the build log for the same error returns nothing. If the build log also has the error, it's real.
+
+This shows up most often after:
+- A new file was added or renamed
+- A `UIViewRepresentable` was introduced (UIKit imports trip SourceKit)
+- A package or scheme change
+
+Restart of the build helper or a clean is the surest way to clear the cache, but they're rarely necessary — most lag clears on its own within seconds.
+
 ## The Visual Preview Loop
 
 With the Xcode MCP Bridge, Claude Code can render SwiftUI previews and see the result.
