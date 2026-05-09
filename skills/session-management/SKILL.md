@@ -124,6 +124,65 @@ Name workspaces after their task, not generic labels:
 
 Don't keep stale workspaces open. Merge or close within 24 hours. Long-lived branches diverge from main and create painful merges.
 
+## Recovering After Conversation Compaction
+
+Long sessions hit Claude Code's context limit and trigger automatic compaction — the harness summarizes earlier messages and replaces them with a digest, freeing space for new work. Compaction preserves the gist of the session but loses precise file content, exact diffs, and any in-context state that wasn't on disk.
+
+The danger zone is the first turn after compaction: the agent may "remember" file contents that have since changed, or assume an active branch that has since merged. Without a recovery ritual, the next edit can land on stale assumptions and produce a regression that's hard to attribute.
+
+### The Post-Compaction Ground Check
+
+Run this before any edit in the first turn after compaction (or whenever the conversation feels like it's been summarized):
+
+```bash
+# 1. What branch am I on, and what's the state?
+git status
+git log --oneline -10
+
+# 2. Is the repo clean, or are there uncommitted changes from before
+#    compaction that the digest may have lost track of?
+git diff
+git diff --staged
+
+# 3. Has the upstream moved while I was working?
+git fetch origin
+git log --oneline HEAD..origin/main
+```
+
+If any of those reveal surprises — uncommitted changes that weren't in the digest, an upstream that's moved, a branch that was merged — STOP and reconcile before editing. The cost of reconciling is minutes; the cost of overwriting an unfamiliar change is hours.
+
+### Re-Reading CLAUDE.md After Compaction
+
+The compaction digest may have summarized your CLAUDE.md content. Before relying on any rule, re-read the actual file:
+
+```
+Read CLAUDE.md and the active plan file (if any) before making
+the next edit. Do not trust your in-context summary of either.
+```
+
+This re-establishes ground truth for project conventions, custom-component lists, known gotchas, and any active spec.
+
+### Re-Reading Files Before Editing
+
+Compaction often summarizes file contents away. The cheapest insurance: re-read any file you're about to edit, even if you "remember" it. The Read tool is fast and the harness tracks what you've read against what you can edit.
+
+When in doubt, the prompt:
+
+```
+Before editing <file>, read it again. The earlier conversation
+may have been compacted and the in-context content may be stale.
+```
+
+### Signals Compaction Just Happened
+
+Watch for these in the first turn back:
+- The system note announcing compaction (explicit signal)
+- A "Summary:" header in the most recent system message
+- File-content references that feel sparse compared to the original
+- The session-start timestamp older than the timestamp on a recent commit
+
+When you see any of these, run the ground check before editing.
+
 ## Resuming From Your Phone
 
 If a Remote Control session times out:
