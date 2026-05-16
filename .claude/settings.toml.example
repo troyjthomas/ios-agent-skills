@@ -1,0 +1,34 @@
+# Claude Code hooks configuration for ios-agent-skills projects.
+#
+# Copy this file to .claude/settings.toml at your project root.
+# Two hooks are defined:
+#   1. Auto-format Swift files after every edit
+#   2. Run the code-reviewer agent before every git commit
+#
+# Customize freely. Remove either hook if you don't want it.
+# Documentation: skills/automated-review/automated-review.md
+
+# Auto-format and auto-lint after Swift file edits.
+# Runs swiftformat and swiftlint --fix.
+# Silent on success; non-blocking on failure.
+[[hooks]]
+event = "PostToolUse"
+run_in_background = false
+
+  [hooks.matcher]
+  tool_name = "edit_file"
+  file_paths = ["*.swift", "**/*.swift"]
+
+  command = "sh ./scripts/post-edit-format.sh"
+
+# Run the code-reviewer agent before every git commit.
+# Blocks the commit on BLOCKER-level findings.
+# Allows MAJOR with a warning. Lets MINOR and NOTE through silently.
+[[hooks]]
+event = "PreToolUse"
+run_in_background = false
+
+  [hooks.matcher]
+  tool_name = "git_commit"
+
+  command = "sh ./scripts/pre-commit-review.sh"
