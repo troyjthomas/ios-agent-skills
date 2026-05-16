@@ -5,7 +5,7 @@
 A skill pack for **designers and non-developers** who build SwiftUI apps using Claude Code. 18 skills encoding the workflows, quality gates, and native-first patterns that produce App Store-quality results.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-19-blue.svg)](#skill-map)
+[![Skills](https://img.shields.io/badge/skills-20-blue.svg)](#skill-map)
 [![Agents](https://img.shields.io/badge/agents-3-purple.svg)](#agents)
 
 ## Why This Exists
@@ -540,6 +540,7 @@ Three tools, three purposes:
 | Skill | Purpose |
 | --- | --- |
 | [automated-review](https://github.com/troyjthomas/ios-agent-skills/blob/main/skills/automated-review/automated-review.md) | Hooks the code-reviewer agent into every edit and commit |
+| [quality-gates](https://github.com/troyjthomas/ios-agent-skills/blob/main/skills/quality-gates/quality-gates.md) | Session-end checklist: build, test, no pbxproj changes, no force unwraps |
 
 ### Persist, Test, Polish, Ship, Maintain
 | Skill | Purpose |
