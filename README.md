@@ -5,7 +5,7 @@
 A skill pack for **designers and non-developers** who build SwiftUI apps using Claude Code. 18 skills encoding the workflows, quality gates, and native-first patterns that produce App Store-quality results.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Skills](https://img.shields.io/badge/skills-18-blue.svg)](#skill-map)
+[![Skills](https://img.shields.io/badge/skills-19-blue.svg)](#skill-map)
 [![Agents](https://img.shields.io/badge/agents-3-purple.svg)](#agents)
 
 ## Why This Exists
@@ -16,7 +16,7 @@ AI coding agents default to the shortest path: custom implementations over nativ
 - Design in Figma and build in Claude Code
 - Target native iOS with SwiftUI (iOS 26+)
 - Want pixel-level control without writing Swift
-- Run parallel workstreams via Conductor or cmux
+- Run parallel workstreams across multiple Claude Code sessions
 - Work from both Mac and phone
 
 ## Quick Start
@@ -535,6 +535,12 @@ Three tools, three purposes:
 | [git-workflow](skills/git-workflow/SKILL.md) | Parallel workspace merge strategy |
 | [session-management](skills/session-management/SKILL.md) | Context windows, continuity, resuming work |
 
+### Quality
+
+| Skill | Purpose |
+| --- | --- |
+| [automated-review](https://github.com/troyjthomas/ios-agent-skills/blob/main/skills/automated-review/automated-review.md) | Hooks the code-reviewer agent into every edit and commit |
+
 ### Persist, Test, Polish, Ship, Maintain
 | Skill | Purpose |
 |---|---|
@@ -544,6 +550,20 @@ Three tools, three purposes:
 | [device-testing](skills/device-testing/SKILL.md) | Real device testing checklist |
 | [app-store-prep](skills/app-store-prep/SKILL.md) | TestFlight, metadata, App Store submission |
 | [post-launch](skills/post-launch/SKILL.md) | Crash reporting, feedback loops, versioning |
+
+## Working Environment
+
+Claude Code is the agent. The interface you use to run it is your choice. The skills in this repo work across all of them.
+
+| Tool | Best for |
+| --- | --- |
+| Claude Desktop | Multiple parallel sessions with full chat context, iOS Remote Control, daily updates from Anthropic |
+| Claude Code CLI | Direct terminal use, scripting, CI |
+| [Clarc](https://github.com/ttnear/Clarc) | Native SwiftUI GUI for Claude Code with inline terminal |
+| [Conductor](https://conductor.build) | Per-feature worktree isolation if you want each workstream on its own branch |
+| Ghostty + Claude Code CLI | Lightweight terminal-first setup |
+
+Pick what fits your workflow. The skills don't care which one you use.
 
 ## MCP Stack
 
@@ -571,7 +591,7 @@ Four MCPs give Claude Code full access to your design files, Apple documentation
 1. Vision   ->  Define the app in Claude Chat
 2. Spec     ->  CLAUDE.md + screen map
 3. Scaffold ->  Build skeleton in one session
-4. Build    ->  Screen by screen via Conductor
+4. Build    ->  Screen by screen via parallel sessions
 5. Persist  ->  SwiftData models
 6. Test     ->  Automated (XcodeBuildMCP) + manual (device)
 7. Polish   ->  Liquid Glass, haptics, Figma matching
@@ -623,6 +643,12 @@ These will land as specific builds hit them and yield concrete, transferable pat
 4. **MCP-powered verification.** Claude Code checks its own work before presenting.
 5. **Parallel-friendly.** Every skill produces isolated, mergeable work.
 6. **Phone-accessible.** Continue from anywhere via Remote Control and Dispatch.
+
+## Documentation
+
+* [Getting Started](docs/getting-started.md) — Full setup walkthrough
+* [Mobile Workflow](docs/mobile-workflow.md) — Continue from your phone
+* [Code Quality](docs/code-quality.md) — Why this stack invests in code review
 
 ## Community Resources
 
